@@ -23,7 +23,8 @@
       <div class="game-footer">
         <button class="refresh-btn" @click="restartTheGame">Restart Game</button>
         <div class="winner-message" v-if="isGameEnded">
-          <h2>{{ winner }} is the Winner!</h2>
+          <h2 v-if="winner !== 'tie'">{{ winner }} is the Winner!</h2>
+          <h2 v-else>It's a Tie!</h2>
         </div>
       </div>
     </div>
@@ -139,6 +140,12 @@ function checkWin() {
   }
   if (diagonalRightToLeft.every((item) => item == 'O')) {
     winner.value = 'O'
+    isGameEnded.value = true
+    return
+  }
+
+  if (newGameBoard.every((item) => item !== '')) {
+    winner.value = 'tie'
     isGameEnded.value = true
     return
   }
